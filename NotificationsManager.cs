@@ -44,7 +44,7 @@ namespace NotificationsManager
         /// - Platform: string ['mpns' | 'windows' | 'apns' | 'ios' | 'fcm' | 'android'] -> Client device OS or corresponding push platform acronym.
         /// - Tags: List[string] -> Adding tags to device installations allows for targeting devices by tag for push notifications. See more: https://docs.microsoft.com/en-us/azure/notification-hubs/notification-hubs-tags-segment-push-message
         ///</param>
-        public async Task<string> RegisterAsync(IDeviceInstallation deviceData)
+        public async Task<string> Register(IDeviceInstallation deviceData)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace NotificationsManager
         /// - TagToRemove: string | null
         /// - TagToAdd: string | null
         ///</param>
-        public async Task<string> UpdateInstallationTagsAsync(string installationId, IInstallationUpdate installationUpdate)
+        public async Task<string> UpdateInstallationTags(string installationId, IInstallationUpdate installationUpdate)
         {
             try
             {
