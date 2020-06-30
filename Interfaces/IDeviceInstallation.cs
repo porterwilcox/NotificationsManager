@@ -8,7 +8,6 @@ namespace NotificationsManager.Interfaces
         string Handle { get; set; }
         string Platform { get; set; }
         List<string> Tags { get; set; }
-
     }
 
     public interface IInstallationUpdate

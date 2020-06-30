@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.NotificationHubs;
+using NotificationsManager.Interfaces;
 
 namespace NotificationsManager.Classes
 {
@@ -14,48 +15,67 @@ namespace NotificationsManager.Classes
             _hubClient = hubClient;
         }
 
-        private void IsNotification(Notification notification)
+        private void IsValidNotificaitonBody(INotificationBody body)
         {
-            if(!notification.ContainsKey("Message") || notification.Message == null)
+            if(body.Message == null)
             {
-                throw new Exception("Must provide a valid notification payload.");
+                throw new Exception("Must provide a valid notification payload. [Error]: Missing property Message: string");
+            }
+        }
+
+        private TemplateNotification BuildNotification(INotificationBody body)
+        {
+            try
+            {
+                TemplateNotification notification = new TemplateNotification((Dictionary<string, string>)body);
+                //NOTE As of iOS 13 apple requires these headers for push notifications. (as opposed to 'background')
+                notification.Headers = new Dictionary<string, string> {{"apns-push-type", "alert"}};
+                return notification;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Could not successfully construct a TemplateNotification from payload.");
             }
         }
         
-        public async Task<NotificationOutcome> NotifyAll(Notification notification)
+        public async Task<NotificationOutcome> NotifyAll(INotificationBody body)
         {
             try
             {
-                IsNotification(notification);
-                return await _hubClient.SendTemplateNotificationAsync(notification);
+                IsValidNotificaitonBody(body);
+                return await _hubClient.SendNotificationAsync(BuildNotification(body));
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
-        public async Task<NotificationOutcome> NotifyByHasTags(Notification notification, IEnumerable<string> tags)
+        public async Task<NotificationOutcome> NotifyByHasTags(INotificationBody body, IEnumerable<string> tags)
         {
             try
             {
-                IsNotification(notification);
-                if(tags.Count() == 0)
+                if(tags == null || tags.Count() == 0)
                 {
-                    throw new Exception("Must provide tags to target. Please provide tags else use NotifyAll.");
+                    throw new Exception("Must provide tags to target. Please provide tags, else use NotifyAll.");
                 }
-                return await _hubClient.SendTemplateNotificationAsync(notification, tags);
+                IsValidNotificaitonBody(body);
+                return await _hubClient.SendNotificationAsync(BuildNotification(body), tags);
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
-        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(Notification notification, string tagExpression)
+        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(INotificationBody body, string tagExpression)
         {
             try
             {
-                IsNotification(notification);
-                return await _hubClient.SendTemplateNotificationAsync(notification, tagExpression);
+                if(tagExpression == null || tagExpression.Length == 0)
+                {
+                    throw new Exception("Must provide a valid tag expression. Please provide a tag expression, else us NotifyAll.");
+                }
+                IsValidNotificaitonBody(body);
+                return await _hubClient.SendNotificationAsync(BuildNotification(body), tagExpression);
             }
             catch (Exception e)
             {
