@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Azure.NotificationHubs;
 using NotificationsManager.Classes;
-using NotificationsManager.Congfig;
+using NotificationsManager.Config;
 using NotificationsManager.Interfaces;
 using System.Collections.Generic;
 
