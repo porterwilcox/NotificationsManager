@@ -4,7 +4,7 @@ namespace NotificationsManager.Interfaces
 {
     public interface IDeviceInstallation
     {
-        string InstallationId { get; set; } 
+        string InstallationId { get; set; }
         string Handle { get; set; }
         string Platform { get; set; }
         List<string> Tags { get; set; }

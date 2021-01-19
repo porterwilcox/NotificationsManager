@@ -23,7 +23,7 @@ namespace NotificationsManager
         ///</summary>
         public NotificationManager()
         {
-            _hubClient =  NotificationHubClient.CreateClientFromConnectionString(Settings.AccessSignature, "PortalNotifications");
+            _hubClient =  NotificationHubClient.CreateClientFromConnectionString(Settings.AccessSignature, "IGS-CustomerMobile");
             _registration = new Registration(_hubClient);
             _mailMan = new MailMan(_hubClient);
         }  
@@ -68,16 +68,16 @@ namespace NotificationsManager
         ///<param name="installationId">
         ///The unique string stored in the client that identifies the Installation.
         ///</param>
-        ///<param name="installationUpdate"> 
+        ///<param name="IInstallationUpdate"> 
         ///A payload with the following properties:
         /// - TagToRemove: string | null
         /// - TagToAdd: string | null
         ///</param>
-        public async Task<string> UpdateInstallationTags(string installationId, IInstallationUpdate installationUpdate)
+        public async Task<string> UpdateInstallationTags(string installationId, IInstallationUpdate IInstallationUpdate)
         {
             try
             {
-                return await _registration.patchInstallationAsync(installationId, installationUpdate);
+                return await _registration.patchInstallationAsync(installationId, IInstallationUpdate);
             }
             catch (Exception e)
             {
@@ -97,7 +97,7 @@ namespace NotificationsManager
         ///?SubTitle: string
         ///?Title: string
         ///</param>
-        public async Task<NotificationOutcome> NotifyAll(INotificationBody body)
+        public async Task<NotificationOutcome> NotifyAll(NotificationBody body)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace NotificationsManager
         ///<param name="tags">
         ///A non-empty enumerable of strings representing tags. (eg. 'Platform:iOS', 'Location:Boise', etc.) Maximum of 20 tags.
         ///</param>
-        public async Task<NotificationOutcome> NotifyByHasTags(INotificationBody body, IEnumerable<string> tags)
+        public async Task<NotificationOutcome> NotifyByHasTags(NotificationBody body, IEnumerable<string> tags)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace NotificationsManager
         ///<param name="tagExpression">
         ///A string of type tag expression. A tag expression is any boolean expression constructed using the logical operators AND (double ampersand), OR (||), NOT (!), and round parentheses. For example: (A || B) ampersandampersand !C. If an expression uses only ORs, it can contain at most 20 tags. Other expressions are limited to 6 tags. Note that a single tag "A" is a valid expression.
         ///</param>
-        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(INotificationBody body, string tagExpression)
+        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(NotificationBody body, string tagExpression)
         {
             try
             {

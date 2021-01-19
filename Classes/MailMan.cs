@@ -15,7 +15,7 @@ namespace NotificationsManager.Classes
             _hubClient = hubClient;
         }
 
-        private void IsValidNotificaitonBody(INotificationBody body)
+        private void IsValidNotificaitonBody(NotificationBody body)
         {
             if(body.Message == null)
             {
@@ -23,11 +23,16 @@ namespace NotificationsManager.Classes
             }
         }
 
-        private TemplateNotification BuildNotification(INotificationBody body)
+        private TemplateNotification BuildNotification(NotificationBody body)
         {
             try
             {
-                TemplateNotification notification = new TemplateNotification((Dictionary<string, string>)body);
+                var dict = new Dictionary<string, string> { 
+                    { "Message", body.Message },
+                    { "Title", body.Title ?? "" },
+                    { "Subtitle", body.Subtitle ?? "" } 
+                };
+                TemplateNotification notification = new TemplateNotification(dict);
                 //NOTE As of iOS 13 apple requires these headers for push notifications. (as opposed to 'background')
                 notification.Headers = new Dictionary<string, string> {{"apns-push-type", "alert"}};
                 return notification;
@@ -38,7 +43,7 @@ namespace NotificationsManager.Classes
             }
         }
         
-        public async Task<NotificationOutcome> NotifyAll(INotificationBody body)
+        public async Task<NotificationOutcome> NotifyAll(NotificationBody body)
         {
             try
             {
@@ -50,7 +55,7 @@ namespace NotificationsManager.Classes
                 throw e;
             }
         }
-        public async Task<NotificationOutcome> NotifyByHasTags(INotificationBody body, IEnumerable<string> tags)
+        public async Task<NotificationOutcome> NotifyByHasTags(NotificationBody body, IEnumerable<string> tags)
         {
             try
             {
@@ -66,7 +71,7 @@ namespace NotificationsManager.Classes
                 throw e;
             }
         }
-        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(INotificationBody body, string tagExpression)
+        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(NotificationBody body, string tagExpression)
         {
             try
             {

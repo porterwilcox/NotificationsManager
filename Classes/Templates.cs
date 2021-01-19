@@ -12,13 +12,13 @@ namespace NotificationsManager.Classes
         {
             var ApnsSimple = new InstallationTemplate();
             var ApnsFull = new InstallationTemplate();
-            var MpnsFcmSimple = new InstallationTemplate();
-            var MpnsFcmFull = new InstallationTemplate();
+			var MpnsFcmSimple = new InstallationTemplate();
+			var MpnsFcmFull = new InstallationTemplate();
 
             ApnsSimple.Body = "{\"aps\":{\"alert\":\"$(message)\"}}";
             ApnsFull.Body = "{\"aps\":{\"alert\":{\"title\":\".(title, 33)\", \"subTitle\":\"$(subTitle)\", \"body\":\"$(message)\"}}}";
-            MpnsFcmSimple.Body = "<toast><visual><binding template=\"ToastText01\"><text id=\"1\">$(message)</text></binding></visual></toast>";
-            MpnsFcmFull.Body = "<toast><visual><binding template=\"ToastText01\"><text id=\"1\"><b>.(title, 33)</b></text><text id=\"2\"><i>$(subTitle)</i></text><text id=\"3\">$(message)</text></binding></visual></toast>";
+			MpnsFcmSimple.Body = "{\"notification\":{\"body\":\"$(message)\"}}";
+			MpnsFcmFull.Body = "{\"notification\":{\"title\":\".(title, 33)\", \"subTitle\":\"$(subTitle)\", \"body\":\"$(message)\"}}}";
 
             ApnsTemplates.Add("ApnsSimple", ApnsSimple);
             ApnsTemplates.Add("ApnsFull", ApnsFull);

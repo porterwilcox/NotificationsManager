@@ -32,6 +32,7 @@ namespace NotificationsManager.Classes
             installation.InstallationId = deviceData.InstallationId;
             installation.PushChannel = deviceData.Handle;
             installation.Tags = deviceData.Tags;
+            installation.Templates = new Dictionary<string, InstallationTemplate>();
 
             switch (deviceData.Platform = deviceData.Platform.ToLower())
             {
@@ -64,7 +65,7 @@ namespace NotificationsManager.Classes
             }
             catch (Exception e)
             {
-            throw e;
+                throw e;
             }
         }
 
@@ -90,28 +91,28 @@ namespace NotificationsManager.Classes
             }
         }
 
-        public async Task<string> patchInstallationAsync(string installationId, IInstallationUpdate installationUpdate)
+        public async Task<string> patchInstallationAsync(string installationId, IInstallationUpdate IInstallationUpdate)
         {
-            if(installationUpdate.TagToAdd == null && installationUpdate.TagToRemove == null)
+            if(IInstallationUpdate.TagToAdd == null && IInstallationUpdate.TagToRemove == null)
             {
                 throw new Exception("You must specify (a) tag(s) to add, remove, or replace.");
             }
 
             PartialUpdateOperation tagsOpertation = new PartialUpdateOperation();
 
-            if (installationUpdate.TagToRemove == null)
+            if (IInstallationUpdate.TagToRemove == null)
             { //NOTE adding
                 tagsOpertation.Operation = UpdateOperationType.Add;
                 tagsOpertation.Path = "/tags";
-            } else if (installationUpdate.TagToAdd == null)
+            } else if (IInstallationUpdate.TagToAdd == null)
             { //NOTE removing
                 tagsOpertation.Operation = UpdateOperationType.Remove;
-                tagsOpertation.Path = "/tags/" + installationUpdate.TagToRemove;
+                tagsOpertation.Path = "/tags/" + IInstallationUpdate.TagToRemove;
             } else
             { //NOTE replacing
                 tagsOpertation.Operation = UpdateOperationType.Replace;
-                tagsOpertation.Path = "/tags/" + installationUpdate.TagToRemove;
-                tagsOpertation.Value = installationUpdate.TagToAdd;
+                tagsOpertation.Path = "/tags/" + IInstallationUpdate.TagToRemove;
+                tagsOpertation.Value = IInstallationUpdate.TagToAdd;
             }
             
             try

@@ -35,7 +35,7 @@ You should be ready to instantiate and utilize a `NotificationManager` elsewhere
 `.Register`
 
 Use this method to register a device. Creates a device installation asynchronously. Will not create multiple installations for same device if one already exists with provided deviceData. 
->params: [IDeviceInstallation](https://github.com/porterwilcox/NotificationsManager#IDeviceInstallation) deviceData <br/>
+>params: [IIDeviceInstallation](https://github.com/porterwilcox/NotificationsManager#IIDeviceInstallation) deviceData <br/>
 >returns: string 
 
 <br/>
@@ -43,7 +43,7 @@ Use this method to register a device. Creates a device installation asynchronous
 `.UpdateInstallationTags`
 
 Use this method to update an installation's tags asynchronously. To REPLACE an existing tag with a new one, populate both properties (namely TagToRemove and TagToAdd) on the second argument. To ADD or REMOVE a tag, on the second argument populate the corresponding property appropriately and set the other to null.
->params: string installationId, [IInstallationUpdate](https://github.com/porterwilcox/NotificationsManager#IInstallationUpdate) installationUpdate <br/>
+>params: string installationId, [IInstallationUpdate](https://github.com/porterwilcox/NotificationsManager#IInstallationUpdate) IInstallationUpdate <br/>
 >returns: string 
 
 <br/>
@@ -51,7 +51,7 @@ Use this method to update an installation's tags asynchronously. To REPLACE an e
 `.NotifyAll`
 
 Use this method to send a push notification to all devices registered to the Notification Hub. 
->params: [INotificationBody](https://github.com/porterwilcox/NotificationsManager#INotificationBody) body <br/>
+>params: [NotificationBody](https://github.com/porterwilcox/NotificationsManager#NotificationBody) body <br/>
 >returns: [NotificationOutcome](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.notificationhubs.notificationoutcome?view=azure-dotnet) 
 
 <br/>
@@ -59,7 +59,7 @@ Use this method to send a push notification to all devices registered to the Not
 `.NotifyByHasTags`
 
 Use this method to send a push notification to all devices registered to the Notification Hub that have at least one or more of the corresponding tags.
->params: [INotificationBody](https://github.com/porterwilcox/NotificationsManager#INotificationBody) body, string[] tags <br/>
+>params: [NotificationBody](https://github.com/porterwilcox/NotificationsManager#NotificationBody) body, string[] tags <br/>
 >returns: [NotificationOutcome](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.notificationhubs.notificationoutcome?view=azure-dotnet) 
 
 <br/>
@@ -67,14 +67,14 @@ Use this method to send a push notification to all devices registered to the Not
 `.NotifyBySatisfysTagExpression`
 
 Use this method to send a push notification to all devices registered to the Notification Hub that match the tag expression exactly.
->params: [INotificationBody](https://github.com/porterwilcox/NotificationsManager#INotificationBody) body, string tagExpression <br/>
+>params: [NotificationBody](https://github.com/porterwilcox/NotificationsManager#NotificationBody) body, string tagExpression <br/>
 >returns: [NotificationOutcome](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.notificationhubs.notificationoutcome?view=azure-dotnet) 
 
 <br/>
 
 ### expected payloads
 
-##### `IDeviceInstallation`
+##### `IIDeviceInstallation`
 ```typescript
 string InstallationId  
 string Handle 
@@ -97,7 +97,7 @@ string TagToAdd
 
 <br/>
 
-##### `INotificationBody`
+##### `NotificationBody`
 ```typescript
 string Message
 string Title
