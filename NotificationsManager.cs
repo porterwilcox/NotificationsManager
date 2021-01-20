@@ -23,7 +23,7 @@ namespace NotificationsManager
         ///</summary>
         public NotificationManager()
         {
-            _hubClient =  NotificationHubClient.CreateClientFromConnectionString(Settings.AccessSignature, "IGS-CustomerMobile");
+            _hubClient = NotificationHubClient.CreateClientFromConnectionString(Settings.AccessSignature, "IGS-CustomerMobile");
             _registration = new Registration(_hubClient);
             _mailMan = new MailMan(_hubClient);
         }  
@@ -82,6 +82,48 @@ namespace NotificationsManager
             catch (Exception e)
             {
             throw e;
+            }
+        }
+
+        ///<summary>
+        ///Use this method to get an Installation by the InstallationId.
+        ///</summary>
+        ///<returns>
+        ///An Installation instance
+        ///</returns>
+        ///<param name="installationId">
+        ///The unique string stored in the client that identifies the Installation.
+        ///</param>
+        public Task<Installation> GetInstallation(string installationId)
+        {
+            try
+            {
+                return _registration.GetInstallation(installationId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        ///<summary>
+        ///Use this method to delete an Installation by the InstallationId.
+        ///</summary>
+        ///<returns>
+        ///Void
+        ///</returns>
+        ///<param name="installationId">
+        ///The unique string stored in the client that identifies the Installation.
+        ///</param>
+        public Task DeleteInstallation(string installationId)
+        {
+            try
+            {
+                return _registration.DeleteInstallation(installationId);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 

@@ -125,5 +125,29 @@ namespace NotificationsManager.Classes
             throw e;
             }
         }
+
+        public async Task<Installation> GetInstallation(string installationId)
+        {
+            try
+            {
+                return await _hubClient.GetInstallationAsync(installationId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public Task DeleteInstallation(string installationId)
+        {
+			try
+			{
+                return _hubClient.DeleteInstallationAsync(installationId);
+			}
+			catch (Exception e)
+			{
+                throw e;
+			}
+        }
     }
 }
