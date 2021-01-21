@@ -10,19 +10,25 @@ namespace NotificationsManager.Classes
 
         public Templates()
         {
-			var ApnsSimple = new InstallationTemplate();
+			//NOTE "Simple" templates not in use anymore but there for reference. 
+			//Important: when adding mulitple templates, 
+			//use different property variables for every template
+
+			//var ApnsSimple = new InstallationTemplate();
+			//var MpnsFcmSimple = new InstallationTemplate();
 			var ApnsFull = new InstallationTemplate();
-			var MpnsFcmSimple = new InstallationTemplate();
 			var MpnsFcmFull = new InstallationTemplate();
 
-			ApnsSimple.Body = "{\"aps\":{\"alert\":\"$(message)\"}}";
-			ApnsFull.Body = "{\"aps\":{\"alert\":{\"title\":\".(title, 50)\", \"subTitle\":\"$(subTitle)\", \"body\":\"$(message)\"}}";
-			MpnsFcmSimple.Body = "{\"notification\":{\"body\":\"$(message)\"}}";
-			MpnsFcmFull.Body = "{\"notification\":{\"title\":\".(title, 50)\", \"body\":\"$(message)\"}}";
+			//https://docs.microsoft.com/en-us/azure/notification-hubs/notification-hubs-templates-cross-platform-push-messages#template-expression-language
 
-			ApnsTemplates.Add("ApnsSimple", ApnsSimple);
+			//ApnsSimple.Body = "{\"aps\":{\"alert\":\"$(message)\"}}";
+			//MpnsFcmSimple.Body = "{\"notification\":{\"body\":\"$(message)\"}}";
+			ApnsFull.Body = "{\"aps\":{\"alert\":{\"title\":\".(title, 50)\", \"subTitle\":\"$(subTitle)\", \"body\":\"$(message)\"}}";
+			MpnsFcmFull.Body = "{\"notification\":{\"title\":\".(title, 50)\", \"body\":\"$(message)\"}, \"data\": {\"navTo\":\"$(navTo)\"}}";
+
+			//ApnsTemplates.Add("ApnsSimple", ApnsSimple);
+			//MpnsFcmTemplates.Add("MpnsFcmSimple", MpnsFcmSimple);
 			ApnsTemplates.Add("ApnsFull", ApnsFull);
-			MpnsFcmTemplates.Add("MpnsFcmSimple", MpnsFcmSimple);
 			MpnsFcmTemplates.Add("MpnsFcmFull", MpnsFcmFull);
 
 		}

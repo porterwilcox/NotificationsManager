@@ -30,8 +30,9 @@ namespace NotificationsManager.Classes
                 var dict = new Dictionary<string, string> { 
                     { "message", body.Message }
                 };
-                if(body.Title != null) dict.Add("title", body.Title);
+                if (body.Title != null) dict.Add("title", body.Title);
                 if (body.Subtitle != null) dict.Add("subTitle", body.Subtitle);
+                if (body.NavTo != null) dict.Add("navTo", body.NavTo);
                 TemplateNotification notification = new TemplateNotification(dict);
                 //NOTE As of iOS 13 apple requires these headers for push notifications. (as opposed to 'background')
                 notification.Headers = new Dictionary<string, string> {{"apns-push-type", "alert"}};
@@ -64,12 +65,13 @@ namespace NotificationsManager.Classes
                     throw new Exception("Must provide tags to target. Please provide tags, else use NotifyAll.");
                 }
                 IsValidNotificaitonBody(body);
-                //return await _hubClient.SendTemplateNotificationAsync(new Dictionary<string, string> {
-                //    { "message", body.Message },
-                //    { "title", body.Title ?? "" }
-                //}, "generic");
-                return await _hubClient.SendNotificationAsync(BuildNotification(body), tags);
-            }
+				//var dict = new Dictionary<string, string> {
+				//    { "message", body.Message }
+				//};
+				//if (body.Title != null) dict.Add("title", body.Title);
+				//return await _hubClient.SendTemplateNotificationAsync(dict, "generic");
+				return await _hubClient.SendNotificationAsync(BuildNotification(body), tags);
+			}
             catch (Exception e)
             {
                 throw e;
