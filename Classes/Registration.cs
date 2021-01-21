@@ -91,28 +91,30 @@ namespace NotificationsManager.Classes
             }
         }
 
-        public async Task<string> patchInstallationAsync(string installationId, IInstallationUpdate IInstallationUpdate)
+        public async Task<string> patchInstallationAsync(string installationId, IInstallationUpdate installationUpdate)
         {
-            if(IInstallationUpdate.TagToAdd == null && IInstallationUpdate.TagToRemove == null)
+            if(installationUpdate.TagToAdd == null && installationUpdate.TagToRemove == null)
             {
                 throw new Exception("You must specify (a) tag(s) to add, remove, or replace.");
             }
 
             PartialUpdateOperation tagsOpertation = new PartialUpdateOperation();
 
-            if (IInstallationUpdate.TagToRemove == null)
+            if (installationUpdate.TagToRemove == null)
             { //NOTE adding
                 tagsOpertation.Operation = UpdateOperationType.Add;
                 tagsOpertation.Path = "/tags";
-            } else if (IInstallationUpdate.TagToAdd == null)
+                tagsOpertation.Value = installationUpdate.TagToAdd;
+            }
+            else if (installationUpdate.TagToAdd == null)
             { //NOTE removing
                 tagsOpertation.Operation = UpdateOperationType.Remove;
-                tagsOpertation.Path = "/tags/" + IInstallationUpdate.TagToRemove;
+                tagsOpertation.Path = "/tags/" + installationUpdate.TagToRemove;
             } else
             { //NOTE replacing
                 tagsOpertation.Operation = UpdateOperationType.Replace;
-                tagsOpertation.Path = "/tags/" + IInstallationUpdate.TagToRemove;
-                tagsOpertation.Value = IInstallationUpdate.TagToAdd;
+                tagsOpertation.Path = "/tags/" + installationUpdate.TagToRemove;
+                tagsOpertation.Value = installationUpdate.TagToAdd;
             }
             
             try

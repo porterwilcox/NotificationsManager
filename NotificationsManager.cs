@@ -68,16 +68,16 @@ namespace NotificationsManager
         ///<param name="installationId">
         ///The unique string stored in the client that identifies the Installation.
         ///</param>
-        ///<param name="IInstallationUpdate"> 
+        ///<param name="installationUpdate"> 
         ///A payload with the following properties:
         /// - TagToRemove: string | null
         /// - TagToAdd: string | null
         ///</param>
-        public async Task<string> UpdateInstallationTags(string installationId, IInstallationUpdate IInstallationUpdate)
+        public async Task<string> UpdateInstallationTags(string installationId, IInstallationUpdate installationUpdate)
         {
             try
             {
-                return await _registration.patchInstallationAsync(installationId, IInstallationUpdate);
+                return await _registration.patchInstallationAsync(installationId, installationUpdate);
             }
             catch (Exception e)
             {
