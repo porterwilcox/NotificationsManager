@@ -139,11 +139,11 @@ namespace NotificationsManager
         ///?SubTitle: string
         ///?Title: string
         ///</param>
-        public async Task<NotificationOutcome> NotifyAll(NotificationBody body)
+        public async Task<NotificationOutcome> NotifyAll(NotificationBody notification)
         {
             try
             {
-                return await _mailMan.NotifyAll(body);
+                return await _mailMan.NotifyAll(notification);
             }
             catch (Exception e)
             {
@@ -163,14 +163,11 @@ namespace NotificationsManager
         ///?SubTitle: string
         ///?Title: string
         ///</param>
-        ///<param name="tags">
-        ///A non-empty enumerable of strings representing tags. (eg. 'Platform:iOS', 'Location:Boise', etc.) Maximum of 20 tags.
-        ///</param>
-        public async Task<NotificationOutcome> NotifyByHasTags(NotificationBody body, IEnumerable<string> tags)
+        public async Task<NotificationOutcome> NotifyByHasTags(NotificationBody notification)
         {
             try
             {
-                return await _mailMan.NotifyByHasTags(body, tags);
+                return await _mailMan.NotifyByHasTags(notification);
             }
             catch (Exception e)
             {
@@ -193,11 +190,11 @@ namespace NotificationsManager
         ///<param name="tagExpression">
         ///A string of type tag expression. A tag expression is any boolean expression constructed using the logical operators AND (double ampersand), OR (||), NOT (!), and round parentheses. For example: (A || B) ampersandampersand !C. If an expression uses only ORs, it can contain at most 20 tags. Other expressions are limited to 6 tags. Note that a single tag "A" is a valid expression.
         ///</param>
-        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(NotificationBody body, string tagExpression)
+        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(NotificationBody notification)
         {
             try
             {
-                return await _mailMan.NotifyBySatisfysTagExpression(body, tagExpression);
+                return await _mailMan.NotifyBySatisfysTagExpression(notification);
             }
             catch (Exception e)
             {

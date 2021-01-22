@@ -10,5 +10,7 @@ namespace NotificationsManager.Classes
         public string Title { get; set; }
         public string Subtitle { get; set; }
         public string NavTo { get; set; }
+        public List<string> Tags { get; set; }
+        public string TagExpression { get; set; }
 	}
 }

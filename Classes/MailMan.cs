@@ -44,49 +44,46 @@ namespace NotificationsManager.Classes
             }
         }
         
-        public async Task<NotificationOutcome> NotifyAll(NotificationBody body)
+        public async Task<NotificationOutcome> NotifyAll(NotificationBody notification)
         {
             try
             {
-                IsValidNotificaitonBody(body);
-                return await _hubClient.SendNotificationAsync(BuildNotification(body));
+                IsValidNotificaitonBody(notification);
+                return await _hubClient.SendNotificationAsync(BuildNotification(notification));
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
-        public async Task<NotificationOutcome> NotifyByHasTags(NotificationBody body, IEnumerable<string> tags)
+        public async Task<NotificationOutcome> NotifyByHasTags(NotificationBody notification)
         {
             try
             {
+                var tags = notification.Tags;
                 if(tags == null || tags.Count() == 0)
                 {
                     throw new Exception("Must provide tags to target. Please provide tags, else use NotifyAll.");
                 }
-                IsValidNotificaitonBody(body);
-				//var dict = new Dictionary<string, string> {
-				//    { "message", body.Message }
-				//};
-				//if (body.Title != null) dict.Add("title", body.Title);
-				//return await _hubClient.SendTemplateNotificationAsync(dict, "generic");
-				return await _hubClient.SendNotificationAsync(BuildNotification(body), tags);
+                IsValidNotificaitonBody(notification);
+				return await _hubClient.SendNotificationAsync(BuildNotification(notification), tags);
 			}
             catch (Exception e)
             {
                 throw e;
             }
         }
-        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(NotificationBody body, string tagExpression)
+        public async Task<NotificationOutcome> NotifyBySatisfysTagExpression(NotificationBody notification)
         {
             try
             {
+                var tagExpression = notification.TagExpression;
                 if(tagExpression == null || tagExpression.Length == 0)
                 {
                     throw new Exception("Must provide a valid tag expression. Please provide a tag expression, else us NotifyAll.");
                 }
-                IsValidNotificaitonBody(body);
-                return await _hubClient.SendNotificationAsync(BuildNotification(body), tagExpression);
+                IsValidNotificaitonBody(notification);
+                return await _hubClient.SendNotificationAsync(BuildNotification(notification), tagExpression);
             }
             catch (Exception e)
             {
